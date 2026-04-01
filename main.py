@@ -1,6 +1,6 @@
 import os 
 import CRUD as CRUD
-from CRUD import init_console
+from CRUD import init_console, read_console
 
 if __name__ == "__main__":
     sistem_operasi = os.name
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         match sistem_operasi:
             case "posix": os.system("clear")
             case "nt":os.system("cls")
-            
+
         print("SELAMAT DATANG DIPOGRAM")
         print("PENCATATAN MAHASISWA")
         print("=======================")
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         user_option = input("Masukan Opsi : ")
 
         match user_option:
-            case "1": print("Read Data")
+            case "1": read_console()
             case "2": print("Create Data")
             case "3": print("Update Data")
             case "4": print("Delete Data")

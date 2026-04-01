@@ -27,4 +27,11 @@ def create_first():
     except:
         print("Data tidak berhasil di buat")
 
+def read():
+    try:
+        with open(Database.DB_name, "r") as file:
+            content = file.readlines()
+            return content
+    except:
+        print("Data tidak dapat dibaca, silahkan coba lagi")
 

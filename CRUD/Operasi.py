@@ -27,10 +27,17 @@ def create_first():
     except:
         print("Data tidak berhasil di buat")
 
-def read():
+def read(**kwargs):
     try:
         with open(Database.DB_name, "r") as file:
             content = file.readlines()
+            jumlah_mahasiswa = len(content)
+            if "index" in kwargs:
+                index_mahasiswa = kwargs["index"]-1
+                if index_mahasiswa < 0 or index_mahasiswa > jumlah_mahasiswa:
+                    return False
+                else:
+                    return content[index_mahasiswa]
             return content
     except:
         print("Data tidak dapat dibaca, silahkan coba lagi")
@@ -53,3 +60,33 @@ def create(nama,jurusan,nim,angkatan,jalur_masuk):
             file.write(data_str)
     except:
         print("Data tidak berhasil di buat")
+
+def update(nomor,pk,date_add,nama,jurusan,nim,angkatan,jalur_masuk):
+    
+    data = Database.TEMPLATE.copy()
+    
+    data["pk"]= pk
+    data["date_add"]= date_add
+    data["nama"] = nama + Database.TEMPLATE["nama"] [len(nama):]
+    data["jurusan"] = jurusan + Database.TEMPLATE["jurusan"] [len(jurusan):]
+    data["nim"] = nim + Database.TEMPLATE["nim"] [len(nim):]
+    data["angkatan"] = angkatan + Database.TEMPLATE["angkatan"] [len(angkatan):]
+    data["jalur_masuk"] = jalur_masuk + Database.TEMPLATE["jalur_masuk"] [len(jalur_masuk):]
+
+    data_str= f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["jurusan"]},{data["nim"]},{data["angkatan"]},{data["jalur_masuk"]}\n'
+
+    try:
+        with open(Database.DB_name, "r") as file:
+            data_sementara = file.readlines()
+
+        data_sementara[nomor - 1] = data_str
+
+        with open(Database.DB_name, "w", encoding="utf-8") as file:
+            file.writelines(data_sementara)
+
+        print("Data berhasil di update!!!")
+
+    except:
+        print("Data tidak berhasil di update, silahkan coba lagi!!!")
+
+

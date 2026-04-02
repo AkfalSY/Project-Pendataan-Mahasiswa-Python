@@ -27,3 +27,15 @@ def read_console():
         print(f"{index+1:4} | {nama:.40} | {jurusan:.40} | {nim:.7} | {angkatan:8} | {jalur_masuk:7}", end="") 
 
     print("\n"+"="*128+"\n")   
+
+def create_console():
+    print("\n\n"+"="*128)
+    print("Silahkan tambah data mahasiswa\n")
+
+    nama = input("Nama\t: ")
+    jurusan = input("Jurusan\t: ")
+    nim = input("NIM\t: ")
+    angkatan = input("Angkatan\t: ")
+    jalur_masuk = input("Jalur Masuk\t: ")
+
+    Operasi.create(nama,jurusan,nim,angkatan,jalur_masuk)

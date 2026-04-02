@@ -24,7 +24,7 @@ def read_console():
         nim = data_break[4]
         angkatan = data_break[5]
         jalur_masuk = data_break[6]
-        print(f"{index+1:4} | {nama:.40} | {jurusan:.40} | {nim:.7} | {angkatan:8} | {jalur_masuk:7}", end="") 
+        print(f"{index+1:4} | {nama:.40} | {jurusan:.40} | {nim:.7} | {angkatan:4} | {jalur_masuk:7}", end="") 
 
     print("\n"+"="*128+"\n")   
 
@@ -66,25 +66,35 @@ def update_console():
         print("Silahkan pilih data apa yang ingin anda rubah")
         print(f"1. Nama\t : {nama:.40}")
         print(f"2. Jurusan\t : {jurusan:.40}")
-        print(f"3. NIM\t : {nim:.40}")
-        print(f"4. Angkatan\t : {angkatan:.40}")
-        print(f"5. Jalur Masuk\t : {jalur_masuk:.40}")
+        print(f"3. NIM\t : {nim:.7}")
+        print(f"4. Angkatan\t : {angkatan:.4}")
+        print(f"5. Jalur Masuk\t : {jalur_masuk:.7}")
 
         input_user = input("pilih data [1,2,3,4,5] : ")
         match input_user:
             case "1": nama = input("Nama\t: ")
             case "2": jurusan = input("Jurusan\t: ")
             case "3": nim = input("NIM\t: ")
-            case "4": angkatan = input("Angkatan\t: ")
+            case "4": 
+                while True:
+                    try:
+                        angkatan = int(input("Angkatan\t: "))
+                        if len(str(angkatan)) == 4:
+                            angkatan = str(angkatan)
+                            break
+                        else:
+                            print("inputan harus memiliki 4 angka, silahkan coba lagi")
+                    except:
+                        print("inputan salah, silahkan coba lagi (yyyy)")
             case "5": jalur_masuk = input("Jalur Masuk\t: ")
             case _: print("inputan yang anda masukan salah, silahkan coba lagi!!!")
         
         print("Data baru yang anda ubah")
         print(f"1. Nama\t : {nama:.40}")
         print(f"2. Jurusan\t : {jurusan:.40}")
-        print(f"3. NIM\t : {nim:.40}")
-        print(f"4. Angkatan\t : {angkatan:.40}")
-        print(f"5. Jalur Masuk\t : {jalur_masuk:.40}")
+        print(f"3. NIM\t : {nim:.7}")
+        print(f"4. Angkatan\t : {angkatan:.4}")
+        print(f"5. Jalur Masuk\t : {jalur_masuk:.7}")
 
         is_done = input("Apakah sudah selesai (y/n) ? ")
         if is_done == "y" or is_done == "Y":
@@ -92,3 +102,36 @@ def update_console():
     
     Operasi.update(nomor,pk,date_add,nama,jurusan,nim,angkatan,jalur_masuk)
 
+
+def delete_console():
+    read_console()
+    while True:
+        try: 
+            print("Silahkan pilih nomor data yang ingin dihapus")
+            nomor = int(input("Nomor\t: "))
+            data_mahasiswa = Operasi.read(index=nomor)
+            data_break = data_mahasiswa.split(",")
+            pk = data_break[0]
+            date_add = data_break[1]
+            nama = data_break[2]
+            jurusan = data_break[3]
+            nim = data_break[4]
+            angkatan = data_break[5]
+            jalur_masuk = data_break[6][:-1]
+
+            print("Data baru yang anda ubah")
+            print(f"1. Nama\t : {nama:.40}")
+            print(f"2. Jurusan\t : {jurusan:.40}")
+            print(f"3. NIM\t : {nim:.40}")
+            print(f"4. Angkatan\t : {angkatan:.40}")
+            print(f"5. Jalur Masuk\t : {jalur_masuk:.40}")
+
+            is_done = input("Apakah Anda Yakin (y/n) ? ")
+            if is_done == "y" or is_done == "Y":
+                Operasi.delete(nomor)
+                break
+        except:
+            print("Inputan salah, silahkan coba lagi!!!")
+
+    print("Data berhasil di hapus")
+      

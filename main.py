@@ -1,6 +1,6 @@
 import os 
 import CRUD as CRUD
-from CRUD import init_console, read_console, create_console, update_console
+from CRUD import init_console, read_console, create_console, update_console, delete_console
 
 if __name__ == "__main__":
     sistem_operasi = os.name
@@ -36,7 +36,7 @@ if __name__ == "__main__":
             case "1": read_console()
             case "2": create_console()
             case "3": update_console()
-            case "4": print("Delete Data")
+            case "4": delete_console()
 
         is_done = input("Apakah anda mau mencoba lagi (y/n) ? ")
         if is_done == "n" or is_done == "N":

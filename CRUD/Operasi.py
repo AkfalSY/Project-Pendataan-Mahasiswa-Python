@@ -1,6 +1,7 @@
 from . import Database
 from . import Utility
 import time
+import os
 
 def create_first():
     nama = input("Nama\t: ")
@@ -16,7 +17,7 @@ def create_first():
     data["nama"] = nama + Database.TEMPLATE["nama"] [len(nama):]
     data["jurusan"] = jurusan + Database.TEMPLATE["jurusan"] [len(jurusan):]
     data["nim"] = nim + Database.TEMPLATE["nim"] [len(nim):]
-    data["angkatan"] = angkatan + Database.TEMPLATE["angkatan"] [len(angkatan):]
+    data["angkatan"] = angkatan 
     data["jalur_masuk"] = jalur_masuk + Database.TEMPLATE["jalur_masuk"] [len(jalur_masuk):]
 
     data_str= f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["jurusan"]},{data["nim"]},{data["angkatan"]},{data["jalur_masuk"]}\n'
@@ -50,7 +51,7 @@ def create(nama,jurusan,nim,angkatan,jalur_masuk):
     data["nama"] = nama + Database.TEMPLATE["nama"] [len(nama):]
     data["jurusan"] = jurusan + Database.TEMPLATE["jurusan"] [len(jurusan):]
     data["nim"] = nim + Database.TEMPLATE["nim"] [len(nim):]
-    data["angkatan"] = angkatan + Database.TEMPLATE["angkatan"] [len(angkatan):]
+    data["angkatan"] = str(angkatan)
     data["jalur_masuk"] = jalur_masuk + Database.TEMPLATE["jalur_masuk"] [len(jalur_masuk):]
 
     data_str= f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["jurusan"]},{data["nim"]},{data["angkatan"]},{data["jalur_masuk"]}\n'
@@ -70,7 +71,7 @@ def update(nomor,pk,date_add,nama,jurusan,nim,angkatan,jalur_masuk):
     data["nama"] = nama + Database.TEMPLATE["nama"] [len(nama):]
     data["jurusan"] = jurusan + Database.TEMPLATE["jurusan"] [len(jurusan):]
     data["nim"] = nim + Database.TEMPLATE["nim"] [len(nim):]
-    data["angkatan"] = angkatan + Database.TEMPLATE["angkatan"] [len(angkatan):]
+    data["angkatan"] = str(angkatan)
     data["jalur_masuk"] = jalur_masuk + Database.TEMPLATE["jalur_masuk"] [len(jalur_masuk):]
 
     data_str= f'{data["pk"]},{data["date_add"]},{data["nama"]},{data["jurusan"]},{data["nim"]},{data["angkatan"]},{data["jalur_masuk"]}\n'
@@ -90,3 +91,22 @@ def update(nomor,pk,date_add,nama,jurusan,nim,angkatan,jalur_masuk):
         print("Data tidak berhasil di update, silahkan coba lagi!!!")
 
 
+def delete(nomor): 
+    try:
+        with open(Database.DB_name, "r") as file:
+            counter = 0 
+            while True:
+                content = file.readline()
+                if len(content) == 0 :
+                    break 
+                elif counter == nomor-1:
+                    pass 
+                else: 
+                    with open("data_tempt.txt", "a", encoding="utf-8") as temp_file:
+                        temp_file.write(content)
+                counter += 1
+
+        os.replace("data_tempt.txt", Database.DB_name)
+
+    except:
+        print("Database Error")
